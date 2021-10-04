@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3001
+@version = v1
+@context = graph-api
+###
+GET {{baseUrl}}/{{context}}/{{version}}/test HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+cs-principal-role: SomeROle
+CS-USER-TYPE: someType
+###
