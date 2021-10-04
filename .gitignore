@@ -35,5 +35,5 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 **/config/**
-!/apps/es/config/
-!/apps/graphql/config/
+./apps/es/config/
+./apps/graphql/config/
