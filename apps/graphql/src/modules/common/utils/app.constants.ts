@@ -1,11 +1,11 @@
 export const APP_CONST = {
-	MANDATORY_HEADERS_NAME_LIST: ['CS-LOG-TRACKING-ID', 'CS-USER-TYPE', 'CS-CONSUMER-APP-PROCESS', 'CS-PRINCIPAL-ROLE'],
+	MANDATORY_HEADERS_NAME_LIST: ['CI-LOG-TRACKING-ID', 'CI-USER-TYPE', 'CI-CONSUMER-APP-PROCESS', 'CI-PRINCIPAL-ROLE'],
 	HEADERS: {
-		CS_LOG_TRACKING_ID: 'CS-LOG-TRACKING-ID',
-		CS_USER_ID: 'CS-USER-ID',
-		CS_USER_TYPE: 'CS-USER-TYPE',
-		CS_PRINCIPAL_ROLE: 'CS-PRINCIPAL-ROLE',
-		CS_CONSUMER_APP_PROCESS: 'CS-CONSUMER-APP-PROCESS',
+		CI_LOG_TRACKING_ID: 'CI-LOG-TRACKING-ID',
+		CI_USER_ID: 'CI-USER-ID',
+		CI_USER_TYPE: 'CI-USER-TYPE',
+		CI_PRINCIPAL_ROLE: 'CI-PRINCIPAL-ROLE',
+		CI_CONSUMER_APP_PROCESS: 'CI-CONSUMER-APP-PROCESS',
 	},
 	CHAR: {
 		COMMA: ',',
@@ -28,7 +28,7 @@ export const APP_CONST = {
 	},
 	CORS: {
 		HEADERS: ['Access-Control-Allow-Origin', 'Access-Control-Allow-Methods', 'Access-Control-Allow-Headers', 'Access-Control-Max-Age', 'Access-Control-Allow-Credentials'],
-		WHITELIST: ['127.0.0.0', '127.0.0.0:3002', 'localhost:3002', '0.0.0.0:3002', '*', 'localhost', '*'],
+		WHITELIST: ['127.0.0.0', '127.0.0.0:3002', 'localhost:3002', '0.0.0.0:3002', '*'],
 		ALLOW_HEADERS: ['Content-type', 'Authorization', 'Origin', 'X-Forwaded-for', 'Referrer', 'Origin'],
 		ALLOW_METHODS: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
 		ALLOW_CRED: true,

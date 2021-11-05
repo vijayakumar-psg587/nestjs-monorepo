@@ -7,26 +7,34 @@ import { CustomErrorModel } from '../models/exception/custom-error.model';
 
 import { APP_CONST } from '../utils/app.constants';
 import { AppUtilService } from '@app/common/utils/app-util/app-util.service';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable({
 	scope: Scope.DEFAULT,
 })
 export class HeaderInterceptor implements NestInterceptor {
 	intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-		const req: FastifyReply = context.switchToHttp().getRequest();
+		const gContext = GqlExecutionContext.create(context);
+		const req: FastifyReply = gContext.getContext().req;
 		// validate if request headers  -  USER type and Principal Role are of the required enums
 		const headerGen = this.headerGenerator(req.headers);
+
 		let genVal = null;
 		let headerErrList: string[] = [];
+		// we have to make sure atleast UseridType and PrincipalRoles are entered in HEADERS
+		// TODO. Once tested need to remove the comments below
+		// if (!headerGen.next().value) {
+		// 	headerErrList = ['Request should contain atleast UserIdType or PrincipalRoleType'];
+		// }
 		let itrFlag = true;
 		while (itrFlag || (genVal && !genVal.done)) {
 			genVal = headerGen.next();
 			if (genVal.done) {
 				itrFlag = false;
 			}
-			if (genVal && genVal.value && genVal.value.key === APP_CONST.HEADERS.CS_USER_TYPE.toLowerCase()) {
+			if (genVal && genVal.value && genVal.value.key === APP_CONST.HEADERS.CI_USER_TYPE.toLowerCase()) {
 				headerErrList =
-					Object.values(UserIdType).filter((item) => item.toLowerCase() === genVal.value.key).length > 1
+					Object.keys(UserIdType).filter((item) => item.toLowerCase() === genVal.value.key).length > 1
 						? (() => {
 								const errMsg = `Request does not contain a valid UserIdType`;
 								headerErrList.push(errMsg);
@@ -34,9 +42,9 @@ export class HeaderInterceptor implements NestInterceptor {
 						  })()
 						: headerErrList;
 			}
-			if (genVal && genVal.value && genVal.value.key === APP_CONST.HEADERS.CS_PRINCIPAL_ROLE.toLowerCase()) {
+			if (genVal && genVal.value && genVal.value.key === APP_CONST.HEADERS.CI_PRINCIPAL_ROLE.toLowerCase()) {
 				headerErrList =
-					Object.values(PrincipalRoleType).filter((item) => item.toLowerCase() === genVal.value.key).length > 1
+					Object.keys(PrincipalRoleType).filter((item) => item.toLowerCase() === genVal.value.key).length > 1
 						? (() => {
 								const errMsg = `Request does not contain a valid PrincipalRole`;
 								headerErrList.push(errMsg);
@@ -70,7 +78,7 @@ export class HeaderInterceptor implements NestInterceptor {
 	private *headerGenerator(headerObj: unknown) {
 		// you can put the return type Generator<number>, but it is ot necessary as ts will infer
 		for (const key of Object.keys(headerObj)) {
-			if (key.toLowerCase() === APP_CONST.HEADERS.CS_USER_TYPE.toLowerCase() || key.toLowerCase() === APP_CONST.HEADERS.CS_PRINCIPAL_ROLE.toLowerCase())
+			if (key.toLowerCase() === APP_CONST.HEADERS.CI_USER_TYPE.toLowerCase() || key.toLowerCase() === APP_CONST.HEADERS.CI_PRINCIPAL_ROLE.toLowerCase())
 				yield {
 					key: key.toLowerCase(),
 					value: headerObj[key].toLowerCase(),

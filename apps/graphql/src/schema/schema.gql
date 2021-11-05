@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Movies {
+  name: String!
+  createdDate: String!
+  id: Int
+}
+
+type Query {
+  movies: [Movies!]!
+}

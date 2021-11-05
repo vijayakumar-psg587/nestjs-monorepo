@@ -1,0 +1,38 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
+version: '2.1'
+orbs:
+  node: 'circleci/node@4.7.0'
+jobs:
+  pre_build:
+    description: Prebuild steps to follow before docker
+    working_directory: ~/.app
+    executor:
+      name: node/default
+      tag: '14'
+    steps:
+      - checkout
+      - node/install-packages:
+          cache-path: ~/project/node_modules
+          override-ci-command: npm install
+      - run:
+          name: "GraphAPI run"
+          command: |
+            export TAG=0.1.$CIRCLE_BUILD_NUM
+            echo $TAG
+            npm run build:graphql:dev
+  docker_build:
+    working_directory: ~/.app
+    description: Docker build
+    docker:
+      - image: node:14-alpine3.13
+    steps:
+      - run:
+          name: "Docker build"
+          command: |
+            docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphAPI:${TAG} .
+            echo ${PROJECT_ID}
+workflows:
+  app_docker_ci:
+    jobs:
+      - pre_build
+      - docker_build

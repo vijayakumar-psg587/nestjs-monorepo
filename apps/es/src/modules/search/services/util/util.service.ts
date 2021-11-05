@@ -67,11 +67,11 @@ export class UtilService {
 					})
 					.catch((err) => {
 						console.log('err caught in getting details:', err);
-						reject(new CustomErrorModel('421', err.message, 421));
+						reject(new CustomErrorModel('421', 'REQ', err.message, 421));
 					});
 				resolve(result);
 			} else {
-				reject(new CustomErrorModel('500', 'No Client connection found', 500));
+				reject(new CustomErrorModel('500', 'DB', 'No Client connection found', 500));
 			}
 		});
 	}
@@ -110,12 +110,12 @@ export class UtilService {
 					})
 					.catch((err) => {
 						console.log('err in updating the doc:', err);
-						reject(new CustomErrorModel('421', err, 421));
+						reject(new CustomErrorModel('421', 'DB', err, 421));
 					});
 
 				resolve(updateResult);
 			} else {
-				reject(new CustomErrorModel('500', 'No Client connection found', 500));
+				reject(new CustomErrorModel('500', 'DB', 'No Client connection found', 500));
 			}
 		});
 	}

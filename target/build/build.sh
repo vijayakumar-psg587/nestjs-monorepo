@@ -19,19 +19,19 @@ build_fn() {
     echo '###Getting value for build'
     if [ $1 = 'dev' ]
     then
-        echo '### Build for dev/staging'
-        npm run build:webpack:dev
+        echo '### Build for dev/staging' ${NODE_ENV}
+        npm run build:scaffold:graphql:dev
     elif [ $1 = 'prod' ]
-    then 
+    then
         echo '### Build for prod'
-        npm run build:webpack:prod
+        npm run build:scaffold:graphql:prod
     else
         common_err_fn 'Provided input is invalid'
-    fi    
+    fi
 }
 
 echo '### First installing the dependancies'
-# npm install 
+# npm install
 
 echo '### Now building the artifact'
 # if [ '$#' ne 1 ]
@@ -48,13 +48,21 @@ if [ -d 'target' ]
 then
     rm -rf target
     mkdir target
+    mkdir target/dist
+    mkdir target/build
+    mkdir target/deployment
 else
-    mkdir target   
+    mkdir target
+    mkdir target/dist
+    mkdir target/build
+    mkdir target/deployment
 fi
 
 cp package*.json target/
-cp -r dist target/dist
-cp -r build target/build
 
+cp -r dist/apps/graphql target/dist
+cp -r ./apps/graphql/src/deployment/* target/deployment
+cp -r ./apps/graphql/src/build/* target/build
+pwd && ls -lta
 
 echo '###Completed'

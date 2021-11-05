@@ -1,0 +1,17 @@
+# To learn more about the skaffold.yaml schema visit
+# https://skaffold.dev/docs/references/yaml/
+apiVersion: skaffold/v2beta15
+metadata:
+  name: graphql
+kind: Config
+build:
+  local:
+    {}
+  tagPolicy:
+    {}
+  artifacts:
+    - image: ap0001-ci-graphAPI
+      context: .
+      docker:
+        dockerfile: ./apps/graphql/src/deployment/docker-manifest/Dockerfile
+        noCache: false

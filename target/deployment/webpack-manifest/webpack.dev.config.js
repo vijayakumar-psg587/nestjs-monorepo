@@ -23,7 +23,7 @@ module.exports = {
 	},
 	target: 'node',
 	output: {
-		path: path.join(process.cwd(), './dist/graphql'),
+		path: path.join(process.cwd(), './dist/apps/graphql'),
 		filename: 'main.js',
 	},
 	externals: [nodeExternals()],
@@ -45,5 +45,14 @@ module.exports = {
 			},
 		],
 	},
-	plugins: [],
+	plugins: [
+		new Dotenv({
+			path: './apps/graphql/config/development/.env', // load this now instead of the ones in '.env'
+			safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
+			allowEmptyValues: true, // allow empty variables (e.g. `FOO=`) (treat it as empty string, rather than missing)
+			systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
+			silent: true, // hide any errors
+			defaults: false, // load '.env.defaults' as the default values if empty.
+		}),
+	],
 };

@@ -6,6 +6,7 @@ with nestjs projects**
 Every project has it own runnable nodemon and webpack
 with the appropriate external env file and dataSet if required. Please refer to the project documentation
 
+
 Project lib
 -
 ***Collection of commonly used services and constants. Instead of creating dynamic modules, in monorepo this seem a better fit***
@@ -13,6 +14,10 @@ Project lib
 Project Redis (TBD)
 -
 Refer README.md file under app/redis
+
+Project Database (TBD)
+-
+Refer [README.md](./libs/database/README.md) file under app/libs/database
 
 
 Project Graphql (Under construction)

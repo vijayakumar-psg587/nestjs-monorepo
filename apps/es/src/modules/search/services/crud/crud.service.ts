@@ -49,7 +49,7 @@ export class CrudService {
 						}
 					});
 			} else {
-				reject(new CustomErrorModel(500, 'No client identified', 500));
+				reject(new CustomErrorModel('500', 'DB', 'No client identified', 500));
 			}
 		});
 	}
@@ -75,7 +75,7 @@ export class CrudService {
 						}
 					});
 			} else {
-				reject(new CustomErrorModel(500, 'No client identified', 500));
+				reject(new CustomErrorModel('500', 'DB', 'No client identified', 500));
 			}
 		});
 	}

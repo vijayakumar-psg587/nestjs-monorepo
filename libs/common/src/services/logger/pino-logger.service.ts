@@ -4,7 +4,7 @@ import { AppUtilService } from '@app/common/utils/app-util/app-util.service';
 import * as pino from 'pino';
 import { COMMON_CONST } from '@app/common/utils/common.constants';
 @Injectable()
-export class PinoLoggerService implements LoggerService {
+export class PinoLoggerService {
 	static getLoggerConfig(level: string, appName: string, redactKeys?: string[]): pino.BaseLogger {
 		return pino({
 			useLevelLabels: true,
