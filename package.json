@@ -11,7 +11,7 @@
     "build": "export NODE_ENV=dev && nest build",
     "build:scaffold:graphql:dev" : "nest build graphql",
     "build:scaffold:graphql:prod" : "nest build graphql",
-    "build:graphql:dev": "export NODE_ENV=dev && npm run prebuild:graphql && rimraf target && chmod -R 755 apps/graphql/src/build/ && apps/graphql/src/build/build.sh",
+    "build:graphql:dev": "export NODE_ENV=dev && npm run prebuild:graphql && rimraf target && chmod -R 755 ./apps/graphql/src/build/ && ./apps/graphql/src/build/build.sh",
     "build:babel:graphql": "npm run prebuild:graphql && babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
     "build:webpack:graphql:prod": "NODE_ENV=prod && npm run prebuild:graphql && webpack --config apps/graphql/src/deployment/webpack-manifest/webpack.config.js",
     "build:webpack:graphql:dev": "NODE_ENV=dev && npm run prebuild:graphql && webpack --config apps/graphql/src/deployment/webpack-manifest/webpack.dev.config.js",
