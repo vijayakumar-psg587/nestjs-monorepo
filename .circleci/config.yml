@@ -8,6 +8,13 @@ jobs:
       - image: circleci/node:14.18.1
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
+      - save_cache:
+          key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
+          paths:
+              - /app/.cache
       - run:
           name: "GraphAPI run"
           command: |
