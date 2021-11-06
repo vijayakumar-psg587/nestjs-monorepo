@@ -14,13 +14,20 @@ jobs:
             node --version
             npm --version
             npm install
-            npm run build:graphql:dev:circleci
+            mkdir -p /app/$APP_NAME/build-target
+            npm run build:graphql:dev:circleci > build-target/
+
+      - store_artifacts:
+          path: /app/$APP_NAME/build-target/
+          destination: target
+
   docker_build:
     working_directory: ~/.app
     description: Docker build
     docker:
       - image: circleci/node:14.18.1
     steps:
+      - checkout
       - run:
           name: "Docker build"
           command: |
