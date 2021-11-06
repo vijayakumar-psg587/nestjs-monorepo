@@ -1,12 +1,13 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: '2.1'
-
+orbs:
+  node: circleci/node:10.16.3-browsers
 jobs:
   pre_build:
     description: Prebuild steps to follow before docker
     working_directory: ~/.app
     docker:
-      - image: node:14-alpine3.13
+      - image: circleci/node:14.18.1
     steps:
       - checkout
       - run:
@@ -17,13 +18,16 @@ jobs:
             export TAG=0.1.$CIRCLE_BUILD_NUM
             echo $TAG
             npm install
+            rm -rf target
+            rm -rf dist
             cd apps/graphql/src/build
-            ./build.sh
+            chmod +x apps/graphql/src/build/
+            bash ./build.sh
   docker_build:
     working_directory: ~/.app
     description: Docker build
     docker:
-      - image: node:14-alpine3.13
+      - image: circleci/node:14.18.1
     steps:
       - run:
           name: "Docker build"
