@@ -8,7 +8,8 @@ jobs:
     working_directory: ~/.app
     executor:
       name: node/default
-      tag: '14'
+    docker:
+      image: node:14-alpine3.13
     steps:
       - checkout
       - node/install-packages:
