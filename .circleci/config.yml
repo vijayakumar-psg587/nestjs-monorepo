@@ -18,8 +18,9 @@ jobs:
             npm install
             rm -rf target
             rm -rf dist
-            cd apps/graphql/src/build
-            chmod +x apps/graphql/src/build/
+            chmod +x ./apps/graphql/src/build/
+            cd ./apps/graphql/src/build
+
             bash ./build.sh
   docker_build:
     working_directory: ~/.app
