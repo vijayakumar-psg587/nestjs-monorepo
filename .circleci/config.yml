@@ -16,7 +16,8 @@ jobs:
             ls -lta && pwd
             npm install
             mkdir -p workspace/build-target
-            npm build:graphql:dev:circleci > workspace/build-target/
+            npm build:graphql:dev:circleci
+            cp -r target/ workspace/build-target/
             ls -lta && pwd
 
       - persist_to_workspace:
