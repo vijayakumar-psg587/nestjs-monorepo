@@ -18,7 +18,10 @@ jobs:
             echo $TAG
             npm install
             ls -lta
-            cd $CIRCLE_PROJECT_REPONAME
+            ls -lta apps/
+            ls -lta apps/graphql
+            ls -lta apps/graphql/src
+            ls -lta apps/graphql/src/build
             npm run build:graphql:dev
   docker_build:
     working_directory: ~/.app
