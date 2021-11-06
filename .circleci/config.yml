@@ -26,8 +26,7 @@ jobs:
       - run:
           name: "Docker build"
           command: |
-            docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphAPI:${TAG} .
-            echo ${PROJECT_ID}
+            docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ${APP_ID}-${APP_NAME}:${TAG} .
 workflows:
   app_docker_ci:
     jobs:
