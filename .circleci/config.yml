@@ -16,6 +16,7 @@ jobs:
             npm --version
             export TAG=0.1.$CIRCLE_BUILD_NUM
             echo $TAG
+            npm install
             npm run build:graphql:dev
   docker_build:
     working_directory: ~/.app
