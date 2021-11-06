@@ -1,23 +1,19 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: '2.1'
-orbs:
-  node: 'circleci/node@4.7.0'
+
 jobs:
   pre_build:
     description: Prebuild steps to follow before docker
     working_directory: ~/.app
-    executor:
-      name: node/default
     docker:
-      image: node:14-alpine3.13
+      - image: node:14-alpine3.13
     steps:
       - checkout
-      - node/install-packages:
-          cache-path: ~/project/node_modules
-          override-ci-command: npm install
       - run:
           name: "GraphAPI run"
           command: |
+            node --version
+            npm --version
             export TAG=0.1.$CIRCLE_BUILD_NUM
             echo $TAG
             npm run build:graphql:dev
