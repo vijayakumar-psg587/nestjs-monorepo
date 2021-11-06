@@ -17,6 +17,7 @@ jobs:
             export TAG=0.1.$CIRCLE_BUILD_NUM
             echo $TAG
             npm install
+            ls -lta
             cd $CIRCLE_PROJECT_REPONAME
             npm run build:graphql:dev
   docker_build:
@@ -34,4 +35,6 @@ workflows:
   app_docker_ci:
     jobs:
       - pre_build
-      - docker_build
+      - docker_build:
+          requires:
+            - pre_build
