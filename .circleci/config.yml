@@ -1,7 +1,5 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: '2.1'
-orbs:
-  node: circleci/node:10.16.3-browsers
 jobs:
   pre_build:
     description: Prebuild steps to follow before docker
