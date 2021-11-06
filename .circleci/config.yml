@@ -13,9 +13,6 @@ jobs:
           command: |
             node --version
             npm --version
-            export TAG=0.1.$CIRCLE_BUILD_NUM
-            export LOCAL_APP_NAME=$APP_NAME
-            echo $TAG
             npm install
             npm run build:graphql:dev:circleci
   docker_build:
@@ -27,6 +24,9 @@ jobs:
       - run:
           name: "Docker build"
           command: |
+            export TAG=0.1.$CIRCLE_BUILD_NUM
+            export LOCAL_APP_NAME=$APP_NAME
+            echo $LOCAL_APP_NAME
             docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
 workflows:
   app_docker_ci:
