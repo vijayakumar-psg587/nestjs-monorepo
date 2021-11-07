@@ -22,15 +22,14 @@ jobs:
             npm --version
             ls -lta && pwd
             npm install
-            mkdir -p workspace/build-target
             npm run build:graphql:dev:circleci
-            cp -r target/ workspace/build-target/
-            ls -lta && pwd
+            bash apt install rsync
+            cp -r . .
 
       - persist_to_workspace:
           paths:
-            - build-target
-          root: workspace
+            - ./
+          root: ~/.app
 
   docker_build:
     working_directory: ~/.app
@@ -38,8 +37,15 @@ jobs:
     docker:
       - image: circleci/node:14.18.1
     steps:
+      - restore_cache:
+          keys:
+            - ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
+      - save_cache:
+          key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
+          paths:
+            - /app/.cache
       - attach_workspace:
-          at: /app/workspace
+          at: ~/.app
       - checkout
       - run:
           name: "Docker build"
