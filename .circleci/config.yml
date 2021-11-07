@@ -24,16 +24,15 @@ jobs:
           command: |
             node --version
             npm --version
-            ls -lta && pwd
             npm install
             mkdir -p workspace/build-target/
             npm run build:graphql:dev:circleci
-            ls -lta && pwd
+
             cp -r ./apps ./workspace/build-target/
             cp -r ./libs ./workspace/build-target/
             cp -r *.json ./workspace/build-target/
             cp -r ./target ./workspace/build-target/
-            ls -lta workspace/build-target
+            cp -r ./node_modules ./workspace/build-target/
 
       - persist_to_workspace:
           paths:
@@ -44,10 +43,24 @@ jobs:
     working_directory: ~/graphAPI
     description: Docker build
     docker:
-      - image: cimg/node:14.18.1
+      - image: circleci/node:14.18.1
     steps:
       - attach_workspace:
           at: ~/graphAPI/workspace/
+      - run:
+          name: INstall docker client
+          command: |
+            apk add --no-cache ca-certificates
+            mkdir /usr/share/ca-certificates/extra
+            update-ca-certificates
+            set -x
+            apk add --no-cache docker-cli python3 py3-pip
+            apk add --no-cache --virtual .docker-compose-deps python3-dev libffi-dev openssl-dev gcc libc-dev make
+            docker version
+            docker ps
+            pip3 install docker-compose
+            apk del .docker-compose-deps
+            docker-compose version
       - run:
           name: "Docker build"
           command: |
