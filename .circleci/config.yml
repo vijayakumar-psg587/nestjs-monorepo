@@ -55,7 +55,11 @@ jobs:
               "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
               $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
             sudo apt-get update
-            sudo apt-get install docker-ce docker-ce-cli containerd.io
+            sudo apt-get install docker.io
+            sudo systemctl enable --now docker
+            sudo groupadd docker
+            sudo usermod -aG docker $USER
+            docker --version
       - attach_workspace:
           at: ~/graphAPI/workspace/
       - run:
@@ -67,7 +71,8 @@ jobs:
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             echo $LOCAL_APP_NAME
-            sudo docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
+            docker --version
+            docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
 workflows:
   app_docker_ci:
     jobs:
