@@ -28,9 +28,13 @@ jobs:
             npm install
             mkdir -p workspace/build-target/
             npm run build:graphql:dev:circleci
-            ls -lta && pwd && ls -lt
-            sudo su apt install rsync
-            cp -r ./ ./workspace/build-target/
+            ls -lta && pwd
+            cp -r ./apps ./workspace/build-target/
+            cp -r ./libs ./workspace/build-target/
+            cp -r *.json ./workspace/build-target/
+            cp -r ./target ./workspace/build-target/
+            ls -lta workspace/build-target
+
       - persist_to_workspace:
           paths:
             - build-target
@@ -55,6 +59,7 @@ jobs:
       - run:
           name: "Docker build"
           command: |
+            ls -lta && pwd
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             echo $LOCAL_APP_NAME
