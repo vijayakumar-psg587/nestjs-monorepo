@@ -1,9 +1,13 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: '2.1'
+executors:
+  docker-executor:
+    docker:
+      - image: circleci/node:14.18.1
+    working_directory: ~/graphAPI
 jobs:
   pre_build:
     description: Prebuild steps to follow before docker
-    working_directory: ~/.app
     docker:
       - image: circleci/node:14.18.1
     steps:
@@ -14,7 +18,7 @@ jobs:
       - save_cache:
           key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
           paths:
-              - /app/.cache
+              - /graphAPI/.cache
       - run:
           name: "GraphAPI run"
           command: |
@@ -22,16 +26,16 @@ jobs:
             npm --version
             ls -lta && pwd
             npm install
+            mkdir -p workspace/build-target/
             npm run build:graphql:dev:circleci
-            cp -r . .
-
+            cp -r . workspace/build-target/
       - persist_to_workspace:
           paths:
-            - ./
-          root: ~/.app
+            - build-target
+          root: workspace
 
   docker_build:
-    working_directory: ~/.app
+    working_directory: ~/graphAPI/workspace
     description: Docker build
     docker:
       - image: circleci/node:14.18.1
@@ -44,7 +48,7 @@ jobs:
           paths:
             - /app/.cache
       - attach_workspace:
-          at: ~/.app
+          at: ~/.graphAPI
       - checkout
       - run:
           name: "Docker build"
