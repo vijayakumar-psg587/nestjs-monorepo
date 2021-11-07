@@ -43,10 +43,10 @@ jobs:
     working_directory: ~/graphAPI
     description: Docker build
     docker:
-      - image: circleci/node:14.18.1
+      - image: alpine:3.12.0
     steps:
-      - attach_workspace:
-          at: ~/graphAPI/workspace/
+
+      - setup_remote_docker
       - run:
           name: INstall docker client
           command: |
@@ -61,6 +61,8 @@ jobs:
             pip3 install docker-compose
             apk del .docker-compose-deps
             docker-compose version
+      - attach_workspace:
+          at: ~/graphAPI/workspace/
       - run:
           name: "Docker build"
           command: |
