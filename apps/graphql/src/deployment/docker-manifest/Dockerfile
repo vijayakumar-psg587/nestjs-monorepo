@@ -1,4 +1,6 @@
 FROM node:14-alpine3.13 as docker-build
+ARG port_nbr=3001
+ENV INTERNAL_PORT=${port_nbr}
 LABEL app.id="ap0001" app.name="ci-graphAPI" app.department="core"
 # RUN apk update && apk add --upgrade curl \
 #     && rm -rf /var/cache/apk/*
