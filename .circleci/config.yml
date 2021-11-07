@@ -29,7 +29,7 @@ jobs:
             mkdir -p workspace/build-target/
             npm run build:graphql:dev:circleci
             ls -lta && pwd && ls -lt
-            apt install rsync
+            sudo su apt install rsync
             cp -r ./ ./workspace/build-target/
       - persist_to_workspace:
           paths:
