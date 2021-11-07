@@ -23,7 +23,6 @@ jobs:
             ls -lta && pwd
             npm install
             npm run build:graphql:dev:circleci
-            bash apt install rsync
             cp -r . .
 
       - persist_to_workspace:
