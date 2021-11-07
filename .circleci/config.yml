@@ -71,6 +71,7 @@ jobs:
             ls -lta && pwd
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
+            export INTERNAL_PORT=3002
             echo $LOCAL_APP_NAME
             docker --version
             docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
