@@ -45,6 +45,7 @@ jobs:
     docker:
       - image: cimg/base:2021.04
     steps:
+      - setup_remote_docker
       - run:
           name: INstall docker client
           command: |
@@ -56,11 +57,9 @@ jobs:
             sudo apt install apt-transport-https ca-certificates curl software-properties-common
             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
             apt-cache policy docker-ce
+            echo exit 0 > sudo /usr/sbin/policy-rc.d
+            sudo apt install docker-ce docker-ce-cli containerd.io
 
-            sudo apt install docker-ce
-            sudo service docker restart
-            sudo service docker status
-            sudo docker --version
             docker --version
       - attach_workspace:
           at: ~/graphAPI/workspace/
@@ -73,7 +72,6 @@ jobs:
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             echo $LOCAL_APP_NAME
-            sudo service docker status
             docker --version
             docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
 workflows:
