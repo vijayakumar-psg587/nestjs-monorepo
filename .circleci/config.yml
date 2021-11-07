@@ -4,9 +4,9 @@ executors:
   docker-executor:
     docker:
       - image: circleci/node:14.18.1
-    working_directory: ~/graphAPI
 jobs:
   pre_build:
+    working_directory: ~/graphAPI
     description: Prebuild steps to follow before docker
     docker:
       - image: circleci/node:14.18.1
@@ -18,7 +18,7 @@ jobs:
       - save_cache:
           key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
           paths:
-              - /graphAPI/.cache
+              - ~/graphAPI/.cache
       - run:
           name: "GraphAPI run"
           command: |
@@ -28,14 +28,15 @@ jobs:
             npm install
             mkdir -p workspace/build-target/
             npm run build:graphql:dev:circleci
-            cp -r . workspace/build-target/
+            ls -lta && pwd && ls -lt
+            cp -r ./ ./workspace/build-target/
       - persist_to_workspace:
           paths:
             - build-target
           root: workspace
 
   docker_build:
-    working_directory: ~/graphAPI/workspace
+    working_directory: ~/graphAPI
     description: Docker build
     docker:
       - image: circleci/node:14.18.1
@@ -46,9 +47,9 @@ jobs:
       - save_cache:
           key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
           paths:
-            - /app/.cache
+            - ~/graphAPI/.cache
       - attach_workspace:
-          at: ~/.graphAPI
+          at: ~/graphAPI/workspace/build-target
       - checkout
       - run:
           name: "Docker build"
