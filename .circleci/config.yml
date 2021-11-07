@@ -58,7 +58,8 @@ jobs:
             apt-cache policy docker-ce
 
             sudo apt install docker-ce
-
+            sudo service docker restart
+            sudo service docker status
             sudo docker --version
             docker --version
       - attach_workspace:
@@ -72,6 +73,7 @@ jobs:
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             echo $LOCAL_APP_NAME
+            sudo service docker status
             docker --version
             docker build -f apps/graphql/src/deployment/docker-manifest/Dockerfile -t ci-graphapi:${TAG} .
 workflows:
