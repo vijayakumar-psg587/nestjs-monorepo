@@ -46,15 +46,9 @@ jobs:
     docker:
       - image: circleci/node:14.18.1
     steps:
-      - restore_cache:
-          keys:
-            - ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
-      - save_cache:
-          key: ${CIRCLE_PROJECT_REPONAME}-{{checksum "package-lock.json"}}
-          paths:
-            - ~/graphAPI/.cache
+
       - attach_workspace:
-          at: ~/graphAPI/workspace/build-target
+          at: ~/graphAPI/workspace/
       - checkout
       - run:
           name: "Docker build"
