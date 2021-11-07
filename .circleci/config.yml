@@ -66,9 +66,9 @@ jobs:
       - run:
           name: "Docker build"
           command: |
-            ls -lta && pwd
+
             cd ~/graphAPI/workspace/build-target
-            ls -lta && pwd
+
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             export INTERNAL_PORT=3002
