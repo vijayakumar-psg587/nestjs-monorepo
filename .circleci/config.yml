@@ -46,14 +46,13 @@ jobs:
     docker:
       - image: circleci/node:14.18.1
     steps:
-
       - attach_workspace:
           at: ~/graphAPI/workspace/
-      - checkout
       - run:
           name: "Docker build"
           command: |
             ls -lta && pwd
+            cd ~/graphAPI/workspace
             export TAG=0.1.$CIRCLE_BUILD_NUM
             export LOCAL_APP_NAME=$APP_NAME
             echo $LOCAL_APP_NAME
